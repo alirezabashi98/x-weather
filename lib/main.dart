@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:x_weather/locator.dart';
 
-void main() {
+void main() async{
+  await initializeDependencies();
+
   runApp(const MyApp());
 }
 
