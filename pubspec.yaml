@@ -40,7 +40,6 @@ dependencies:
   ionicons: ^0.2.2
 
   # Networking
-  retrofit: ^4.0.3
   dio: ^5.4.0
 
   # State Management
@@ -53,6 +52,7 @@ dependencies:
   auto_route: ^7.8.4
   awesome_dio_interceptor: ^1.0.0
   toastification: ^1.1.0
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -66,8 +66,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   lint: ^2.2.0
   build_runner: ^2.4.7
-  retrofit_generator: ^8.0.6
-
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
