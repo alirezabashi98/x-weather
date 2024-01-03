@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 
-import '../../presentation/views/main_wrapper_screen.dart';
+import '../../presentation/views/home_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -16,11 +16,9 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
     // add your routes here
     AutoRoute(
-      page: MainWrapperRoute.page,
+      page: HomeRoute.page,
       initial: true,
       path: '/main',
     ),
   ];
 }
-
-final appRouter = AppRouter();
