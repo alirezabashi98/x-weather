@@ -54,6 +54,7 @@ dependencies:
   awesome_dio_interceptor: ^1.0.0
   toastification: ^1.1.0
   dartz: ^0.10.1
+  loading_animation_widget: ^1.2.0+4
 
 dev_dependencies:
   flutter_test:
