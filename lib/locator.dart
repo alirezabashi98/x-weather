@@ -11,12 +11,28 @@ import 'utils/api_provider.dart';
 final locator = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  setupBase();
+  /// datasource
+  setupDatasource();
+  /// repository
+  setupRepository();
+  /// bloc
+  setupBloc();
+}
+
+setupBase(){
   locator.registerSingleton<Dio>(DioProvider.createDio());
   locator.registerSingleton<AppRouter>(AppRouter());
+}
 
-  /// datasource
-  locator.registerFactory<IWeatherDatasorce>(() => WeatherDatasourceImpl());
+setupDatasource(){
+  locator.registerSingleton<IWeatherDatasorce>(WeatherDatasourceImpl());
+}
 
-  /// repository
-  locator.registerFactory<IWeatherRepository>(() => WeatherRepositoryImpl());
+setupRepository(){
+  locator.registerSingleton<IWeatherRepository>(WeatherRepositoryImpl());
+}
+
+setupBloc(){
+
 }
