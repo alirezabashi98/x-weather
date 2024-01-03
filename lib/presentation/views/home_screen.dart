@@ -65,7 +65,17 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return Text('data');
+                        return Container(
+                          height: 184,
+                          width: double.infinity,
+                          margin: EdgeInsets.only(top: 24),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/images/bg_item_weather.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
