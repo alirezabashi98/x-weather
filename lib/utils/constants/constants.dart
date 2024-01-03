@@ -6,29 +6,29 @@ class Constants {
 
   static String errorMessage = 'An error occurred... Please try again';
 
-  static Color primary = const Color(0x00ffffff);
-  static Color secondary = const Color(0x00ebebf5);
-  static Color tertiary = const Color(0x00ebebf5);
-  static Color quaternary = const Color(0x00ebebf5);
+  static Color primary = const Color(0xffffffff);
+  static Color secondary = const Color(0xffebebf5);
+  static Color tertiary = const Color(0xffebebf5);
+  static Color quaternary = const Color(0xffebebf5);
 
   static List<Color> linera1 = [
-    const Color(0x002e335a),
-    const Color(0x001c1b33)
+    Color(0xff2e335a),
+    Color(0xff1c1b33)
   ];
   static List<Color> linera2 = [
-    const Color(0x005936b4),
-    const Color(0x00362a84)
+    const Color(0xff5936b4),
+    const Color(0xff362a84)
   ];
   static List<Color> linera3 = [
-    const Color(0x003658b1),
-    const Color(0x00c159ec)
+    const Color(0xff3658b1),
+    const Color(0xffc159ec)
   ];
   static List<Color> linera4 = [
-    const Color(0x00aec9ff),
-    const Color(0x00083072)
+    const Color(0xffaec9ff),
+    const Color(0xff083072)
   ];
   static List<Color> linera5 = [
-    const Color(0x00f7cbfd),
-    const Color(0x007758d1)
+    const Color(0xfff7cbfd),
+    const Color(0xff7758d1)
   ];
 }
