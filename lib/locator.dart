@@ -21,12 +21,13 @@ Future<void> initializeDependencies() async {
 }
 
 setupBase(){
-  locator.registerSingleton<Dio>(DioProvider.createDio());
+  locator.registerSingleton<Dio>(ApiProvider.createDio());
+  locator.registerSingleton(ApiProvider());
   locator.registerSingleton<AppRouter>(AppRouter());
 }
 
 setupDatasource(){
-  locator.registerSingleton<IWeatherDatasorce>(WeatherDatasourceImpl());
+  locator.registerSingleton<IWeatherDatasource>(WeatherDatasourceImpl());
 }
 
 setupRepository(){
