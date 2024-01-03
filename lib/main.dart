@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:x_weather/config/router/app_router.dart';
 import 'package:x_weather/locator.dart';
+import 'package:x_weather/presentation/views/main_wrapper_screen.dart';
 
 void main() async {
   await initializeDependencies();
@@ -12,12 +14,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('data'),
-        ),
-      ),
+    return MaterialApp.router(
+      routerConfig: locator.get<AppRouter>().config(),
     );
   }
 }
