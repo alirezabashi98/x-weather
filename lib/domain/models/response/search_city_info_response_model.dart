@@ -18,7 +18,7 @@ class SearchCityInfoResponseModel {
         json['city'],
         json['country'],
         json['regionCode'],
-        json['latitude'],
-        json['longitude'],
+        json['latitude'].toString(),
+        json['longitude'].toString(),
       );
 }
