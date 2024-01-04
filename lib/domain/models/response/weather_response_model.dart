@@ -40,10 +40,10 @@ class WeatherResponseModel {
             : [],
         base: json['base'],
         main: MainResponseModel.fromJson(json['main']),
-        visibility: json['visibility'],
+        visibility: double.parse(json['visibility'].toString()).round(),
         wind: WindResponseModel.fromJson(json['wind']),
         clouds: CloudsResponseModel.fromJson(json['clouds']),
-        dt: json['dt'],
+        dt: double.parse(json['dt'].toString()).round(),
         sys: SysResponseModel.fromJson(json['sys']),
         timezone: json['timezone'],
         id: json['id'],
@@ -85,8 +85,8 @@ class SysResponseModel {
         type: json['type'],
         id: json['id'],
         country: json['country'],
-        sunrise: json['sunrise'],
-        sunset: json['sunset'],
+        sunrise: double.parse(json['sunrise'].toString()).round(),
+        sunset: double.parse(json['sunset'].toString()).round(),
       );
 }
 
@@ -104,10 +104,10 @@ class WindResponseModel {
 }
 
 class MainResponseModel {
-  final double? temp;
-  final double? feelsLike;
-  final double? tempMin;
-  final double? tempMax;
+  final int? temp;
+  final int? feelsLike;
+  final int? tempMin;
+  final int? tempMax;
   final int? pressure;
   final int? humidity;
 
@@ -121,12 +121,12 @@ class MainResponseModel {
   });
   factory MainResponseModel.fromJson(Map<String, dynamic> json) =>
       MainResponseModel(
-        temp: json['temp'],
-        feelsLike: json['feels_like'],
-        tempMin: json['temp_min'],
-        tempMax: json['temp_max'],
-        pressure: json['pressure'],
-        humidity: json['humidity'],
+        temp: double.parse(json['temp'].toString()).round() ,
+        feelsLike: double.parse(json['feels_like'].toString()).round() ,
+        tempMin: double.parse(json['temp_min'].toString()).round(),
+        tempMax: double.parse(json['temp_max'].toString()).round() ,
+        pressure: double.parse(json['pressure'].toString()).round(),
+        humidity: double.parse(json['humidity'].toString()).round() ,
       );
 }
 
@@ -149,5 +149,5 @@ class CloudsResponseModel {
   const CloudsResponseModel({this.all});
 
   factory CloudsResponseModel.fromJson(Map<String, dynamic> json) =>
-      CloudsResponseModel(all: json['all']);
+      CloudsResponseModel(all: double.parse(json['all'].toString()).round());
 }

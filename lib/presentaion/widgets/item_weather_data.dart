@@ -45,6 +45,8 @@ class ItemWeatherData extends StatelessWidget {
                   Text(
                     '${weatherData.name}, ${weatherData.sys?.country ?? ''}',
                     style: TextStyle(color: Constants.primary, fontSize: 20),
+                    overflow: TextOverflow.visible,
+                    maxLines: 1,
                   ),
                 ],
               ),
