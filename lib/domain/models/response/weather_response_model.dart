@@ -98,8 +98,8 @@ class WindResponseModel {
 
   factory WindResponseModel.fromJson(Map<String, dynamic> json) =>
       WindResponseModel(
-        speed: json['speed'],
-        deg: json['deg'],
+        speed: double.parse(json['speed'].toString()).round() ,
+        deg: double.parse(json['deg'].toString()).round(),
       );
 }
 
@@ -131,15 +131,15 @@ class MainResponseModel {
 }
 
 class CoordResponseModel {
-  final double? lon;
-  final double? lat;
+  final String? lon;
+  final String? lat;
 
   const CoordResponseModel({this.lon, this.lat});
 
   factory CoordResponseModel.fromJson(Map<String, dynamic> json) =>
       CoordResponseModel(
-        lon: json['lon'],
-        lat: json['lat'],
+        lon: json['lon'].toString(),
+        lat: json['lat'].toString(),
       );
 }
 

@@ -94,4 +94,5 @@ class _assets_images_dart {
   final ic_11d_png = 'assets/images/ic_11d.png';
   final ic_11n_png = 'assets/images/ic_11n.png';
   final n_png = 'assets/images/n.png';
+
 }

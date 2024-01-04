@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:x_weather/domain/models/response/weather_response_model.dart';
 import 'package:x_weather/utils/constants/constants.dart';
-
-import '../../assets/assets.dart';
+import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
 
 class ItemWeatherData extends StatelessWidget {
+  final WeatherResponseModel weatherData;
   const ItemWeatherData({
     super.key,
+    required this.weatherData,
   });
 
   @override
@@ -31,28 +33,30 @@ class ItemWeatherData extends StatelessWidget {
                 children: [
                   const SizedBox(width: double.infinity, height: 32),
                   Text(
-                    '32\u00B0',
+                    '${weatherData.main!.temp!.round()}\u00B0',
                     style: TextStyle(fontSize: 64, color: Constants.primary),
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    '09:27',
+                    weatherData.timezone.convertTimezoneToHours(),
                     style: TextStyle(color: Constants.secondary, fontSize: 16),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Tehran',
+                    '${weatherData.name}, ${weatherData.sys?.country ?? ''}',
                     style: TextStyle(color: Constants.primary, fontSize: 20),
                   ),
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: Align(
-                alignment: Alignment.topCenter,
-                child: Image.asset(AssetsData.light().images.ic_10d_png)),
-          ),
+          if (weatherData.weather != null)
+            Expanded(
+              child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Image.asset(
+                      'assets/images/ic_${weatherData.weather![0].icon}.png')),
+            ),
         ],
       ),
     );
