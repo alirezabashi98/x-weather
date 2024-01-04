@@ -6,7 +6,7 @@ import 'package:x_weather/presentaion/bloc/home/home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IWeatherRepository _weatherRepository = locator.get();
-  List<String> cities = ['tehran', 'berlin'];
+  List<String> cities = [];
   HomeBloc() : super(HomeLoadingState()) {
     on<HomeRequestGetCitiesEvent>((event, emit) async {
       emit(HomeLoadingState());

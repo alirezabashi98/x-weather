@@ -37,56 +37,61 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: Constants.linera1,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<HomeBloc>().add(HomeRequestGetCitiesEvent());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: Constants.linera1,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: SizedBox(
-            height: MediaQuery.sizeOf(context).height,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: BlocBuilder<HomeBloc, HomeState>(
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      const SizedBox(height: 24),
-                      SearchBox(
-                          searchController: _searchController,
-                          weatherRepository: _weatherRepository),
-                      const SizedBox(height: 24),
-                      if (state is HomeLoadingState) ...{
-                        const Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ),
-                      },
-                      if (state is HomeResponseState) ...{
-                        state.cities.fold(
-                          // todo error response
-                          (l) => Text(
-                            'error response ${3600.convertTimezoneToHours()}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          (weatherData) => Expanded(
-                            child: ListView.builder(
-                              itemCount: weatherData.length,
-                              itemBuilder: (context, index) {
-                                return ItemWeatherData(
-                                    weatherData: weatherData[index]);
-                              },
+          child: SafeArea(
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        const SizedBox(height: 24),
+                        SearchBox(
+                            searchController: _searchController,
+                            weatherRepository: _weatherRepository),
+                        const SizedBox(height: 24),
+                        if (state is HomeLoadingState) ...{
+                          const Expanded(
+                            child: Center(
+                              child: CircularProgressIndicator(),
                             ),
                           ),
-                        ),
-                      },
-                    ],
-                  );
-                },
+                        },
+                        if (state is HomeResponseState) ...{
+                          state.cities.fold(
+                            // todo error response
+                            (l) => Text(
+                              'error response ${3600.convertTimezoneToHours()}',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            (weatherData) => Expanded(
+                              child: ListView.builder(
+                                itemCount: weatherData.length,
+                                itemBuilder: (context, index) {
+                                  return ItemWeatherData(
+                                      weatherData: weatherData[index]);
+                                },
+                              ),
+                            ),
+                          ),
+                        },
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ),

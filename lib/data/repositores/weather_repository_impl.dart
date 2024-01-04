@@ -27,8 +27,13 @@ class WeatherRepositoryImpl extends IWeatherRepository {
       List<WeatherResponseModel> listCities = [];
 
       for (var name in names) {
-        var response = await _weatherDatasorce.getWeatherCityName(name);
-        listCities.add(response);
+        try {
+          var response = await _weatherDatasorce.getWeatherCityName(name);
+          listCities.add(response);
+        } catch (ex) {
+          // ignore: avoid_print
+          print('استان پشتیبانی نمیشه توسط سرور');
+        }
       }
 
       return right(listCities);
