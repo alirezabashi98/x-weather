@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:x_weather/config/router/app_router.dart';
 import 'package:x_weather/locator.dart';
-import 'package:x_weather/presentation/views/home_screen.dart';
+import 'package:x_weather/presentaion/views/home_screen.dart';
 
 void main() async {
   await initializeDependencies();
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: locator.get<AppRouter>().config(),
+      theme: ThemeData(fontFamily: 'sf'),
     );
   }
 }

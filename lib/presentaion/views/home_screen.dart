@@ -1,9 +1,11 @@
 import 'dart:ui';
-
+import 'package:x_weather/assets/assets.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:x_weather/utils/constants/constants.dart';
+
+import '../widgets/item_weather_data.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -65,17 +67,7 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return Container(
-                          height: 184,
-                          width: double.infinity,
-                          margin: EdgeInsets.only(top: 24),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/bg_item_weather.png"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
+                        return const ItemWeatherData();
                       },
                     ),
                   ),
