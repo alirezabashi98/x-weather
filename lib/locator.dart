@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/config/router/app_router.dart';
 import 'package:x_weather/data/datasource/remote/weather_datasource_impl.dart';
 import 'package:x_weather/data/repositores/weather_repository_impl.dart';
@@ -13,28 +14,31 @@ final locator = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   setupBase();
+
   /// datasource
   setupDatasource();
+
   /// repository
   setupRepository();
+
   /// bloc
   setupBloc();
 }
 
-setupBase(){
+setupBase() {
   locator.registerSingleton<Dio>(ApiProvider.createDio());
   locator.registerSingleton(ApiProvider());
   locator.registerSingleton<AppRouter>(AppRouter());
 }
 
-setupDatasource(){
+setupDatasource() {
   locator.registerSingleton<IWeatherDatasource>(WeatherDatasourceImpl());
 }
 
-setupRepository(){
+setupRepository() {
   locator.registerSingleton<IWeatherRepository>(WeatherRepositoryImpl());
 }
 
-setupBloc(){
+setupBloc() {
   locator.registerSingleton(HomeBloc());
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/search_city_info_response_model.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
@@ -10,7 +11,6 @@ import '../../../locator.dart';
 class WeatherDatasourceImpl extends IWeatherDatasource {
   final Dio _dio = locator.get();
   final Dio _dioProvider = locator.get<ApiProvider>().getRawDio();
-
 
   @override
   Future<WeatherResponseModel> getWeatherCityName(String name) async {
@@ -27,14 +27,18 @@ class WeatherDatasourceImpl extends IWeatherDatasource {
   }
 
   @override
-  Future<List<SearchCityInfoResponseModel>> searchCityByName(String name) async {
+  Future<List<SearchCityInfoResponseModel>> searchCityByName(
+      String name) async {
     try {
       var response = await _dioProvider.get(
         'http://geodb-free-service.wirefreethought.com/v1/geo/cities',
-        queryParameters: {'limit': 7, 'offset': '0','namePrefix':name},
+        queryParameters: {'limit': 7, 'offset': '0', 'namePrefix': name},
       );
 
-      return response.data['data'].map<SearchCityInfoResponseModel>((json)=>SearchCityInfoResponseModel.fromJson(json)).toList();
+      return response.data['data']
+          .map<SearchCityInfoResponseModel>(
+              (json) => SearchCityInfoResponseModel.fromJson(json))
+          .toList();
     } catch (ex) {
       rethrow;
     }

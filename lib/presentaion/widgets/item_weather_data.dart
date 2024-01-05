@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
+import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
+import 'package:x_weather/presentaion/bloc/home/home_event.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
 
@@ -15,7 +18,7 @@ class ItemWeatherData extends StatelessWidget {
     return Container(
       height: 194,
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 24,bottom: 8),
+      margin: const EdgeInsets.only(top: 24, bottom: 8),
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/bg_item_weather.png"),
@@ -54,10 +57,27 @@ class ItemWeatherData extends StatelessWidget {
           ),
           if (weatherData.weather != null)
             Expanded(
-              child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Image.asset(
-                      'assets/images/ic_${weatherData.weather![0].icon}.png')),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: double.infinity),
+                  Expanded(
+                    flex: 2,
+                    child: Image.asset(
+                        'assets/images/ic_${weatherData.weather![0].icon}.png'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<HomeBloc>().add(
+                            HomeRequestRemoveCityAndGetCitiesEvent(
+                                weatherData.id!),
+                          );
+                    },
+                    child: const Text('delete'),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
             ),
         ],
       ),

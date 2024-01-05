@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/search_city_info_response_model.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
@@ -8,6 +9,7 @@ import 'package:x_weather/utils/constants/constants.dart';
 
 class WeatherRepositoryImpl extends IWeatherRepository {
   final IWeatherDatasource _weatherDatasorce = locator.get();
+  final _citiesDB = Hive.box<String>('cities');
 
   @override
   Future<Either<String, WeatherResponseModel>> getWeatherCityName(
@@ -30,6 +32,11 @@ class WeatherRepositoryImpl extends IWeatherRepository {
         try {
           var response = await _weatherDatasorce.getWeatherCityName(name);
           listCities.add(response);
+          if (response.name != null &&
+              response.id != null &&
+              !_citiesDB.keys.contains(response.id)) {
+            _citiesDB.put(response.id, response.name!);
+          }
         } catch (ex) {
           // ignore: avoid_print
           print('استان پشتیبانی نمیشه توسط سرور');
