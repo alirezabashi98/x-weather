@@ -8,9 +8,10 @@ import 'package:x_weather/presentaion/bloc/home/home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IWeatherRepository _weatherRepository = locator.get();
   final _citiesDB = Hive.box<String>('cities');
-
   List<String> cities = [];
+
   HomeBloc() : super(HomeLoadingState()) {
+    /// add saved cities
     cities.addAll(_citiesDB.values);
 
     on<HomeRequestGetCitiesEvent>((event, emit) async {
@@ -18,6 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var response = await _weatherRepository.getWeatherFromListCities(cities);
       emit(HomeResponseState(response));
     });
+
     on<HomeRequestAddCityAndGetCitiesEvent>((event, emit) async {
       emit(HomeLoadingState());
       if (!cities.contains(event.city)) {
@@ -25,14 +27,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
       add(HomeRequestGetCitiesEvent());
     });
+
     on<HomeRequestRemoveCityAndGetCitiesEvent>((event, emit) async {
       emit(HomeLoadingState());
       if (_citiesDB.keys.contains(event.cityId)) {
         cities.clear();
         _citiesDB.delete(event.cityId);
         cities.addAll(_citiesDB.values);
-        print('city : d $cities');
-        print('city : d ${_citiesDB.values}');
       }
       add(HomeRequestGetCitiesEvent());
     });

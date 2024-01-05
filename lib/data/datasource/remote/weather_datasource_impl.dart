@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/search_city_info_response_model.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
 import 'package:x_weather/utils/api_provider.dart';
-import 'package:x_weather/utils/constants/constants.dart';
 
 import '../../../locator.dart';
 

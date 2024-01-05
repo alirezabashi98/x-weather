@@ -7,9 +7,6 @@ extension TimezoneToHours on int? {
     // تبدیل timezone Shift از ثانیه به Duration
     Duration duration = Duration(seconds: this!);
 
-    // تبدیل Duration به ساعت و دقیقه
-    String formattedTimezoneShift = formatDurationToTime(duration);
-
     // گرفتن زمان گرینویچ
     DateTime utcDateTime = DateTime.now().toUtc();
 

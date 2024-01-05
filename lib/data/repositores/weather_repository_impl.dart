@@ -32,11 +32,14 @@ class WeatherRepositoryImpl extends IWeatherRepository {
         try {
           var response = await _weatherDatasorce.getWeatherCityName(name);
           listCities.add(response);
+
+          /// saved new city in hive db
           if (response.name != null &&
               response.id != null &&
               !_citiesDB.keys.contains(response.id)) {
             _citiesDB.put(response.id, response.name!);
           }
+
         } catch (ex) {
           // ignore: avoid_print
           print('استان پشتیبانی نمیشه توسط سرور');

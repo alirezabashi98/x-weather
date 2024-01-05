@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 class CusttomButton extends StatelessWidget {
@@ -38,7 +36,7 @@ class CusttomButton extends StatelessWidget {
             children: [
               icon ??
                   Icon(
-                    iconData?? Icons.ads_click ,
+                    iconData ?? Icons.ads_click,
                     color: Colors.white,
                   ),
               const SizedBox(width: 4),

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/config/router/app_router.dart';
 import 'package:x_weather/data/datasource/remote/weather_datasource_impl.dart';
 import 'package:x_weather/data/repositores/weather_repository_impl.dart';

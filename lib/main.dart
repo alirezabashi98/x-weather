@@ -4,17 +4,27 @@ import 'package:x_weather/config/router/app_router.dart';
 import 'package:x_weather/locator.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  var citiesBox = await Hive.openBox<String>('cities');
-  var appDataBox = await Hive.openBox<bool>('appData');
-  if (appDataBox.get('firesrun') ?? true) {
-    citiesBox.putAll({112931: 'Tehran',292223:'Dubai',2643743:'London',5128581:'New York'});
-    appDataBox.put('firesrun', false);
-  }
+  await initializeHive();
 
   await initializeDependencies();
 
   runApp(const MyApp());
+}
+
+Future<void> initializeHive() async {
+  await Hive.initFlutter();
+  var citiesBox = await Hive.openBox<String>('cities');
+  var appDataBox = await Hive.openBox<bool>('appData');
+
+  if (appDataBox.get('firesrun') ?? true) {
+    citiesBox.putAll({
+      112931: 'Tehran',
+      292223: 'Dubai',
+      2643743: 'London',
+      5128581: 'New York'
+    });
+    appDataBox.put('firesrun', false);
+  }
 }
 
 class MyApp extends StatelessWidget {
