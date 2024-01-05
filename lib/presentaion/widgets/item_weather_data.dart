@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
 import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
+import 'package:x_weather/presentaion/widgets/custom_button.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
 
@@ -68,36 +69,15 @@ class ItemWeatherData extends StatelessWidget {
                     child: Image.asset(
                         'assets/images/ic_${weatherData.weather![0].icon}.png'),
                   ),
-                  GestureDetector(
+                  CusttomButton(
                     onTap: () {
                       context.read<HomeBloc>().add(
                             HomeRequestRemoveCityAndGetCitiesEvent(
                                 weatherData.id!),
                           );
                     },
-                    child: Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Constants.tertiary
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(CupertinoIcons.delete,color: Colors.white,),
-                          SizedBox(width: 4),
-                          Text(
-                          'delete',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        ],),
-                      ),
-                    ),
+                    textMessage: 'delete',
+                    iconData: CupertinoIcons.delete,
                   ),
                   const SizedBox(height: 8),
                 ],

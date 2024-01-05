@@ -93,6 +93,10 @@ class _assets_images_dart {
   final ic_10n_png = 'assets/images/ic_10n.png';
   final ic_11d_png = 'assets/images/ic_11d.png';
   final ic_11n_png = 'assets/images/ic_11n.png';
+  final ic_13d_png = 'assets/images/ic_13d.png';
+  final ic_13n_png = 'assets/images/ic_13n.png';
+  final ic_50d_png = 'assets/images/ic_50d.png';
+  final ic_50n_png = 'assets/images/ic_50n.png';
+  final ic_error_png = 'assets/images/ic_error.png';
   final n_png = 'assets/images/n.png';
-
 }

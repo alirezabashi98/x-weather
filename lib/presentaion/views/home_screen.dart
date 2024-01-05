@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:x_weather/assets/assets.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/locator.dart';
 import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
 import 'package:x_weather/presentaion/bloc/home/home_state.dart';
+import 'package:x_weather/presentaion/widgets/custom_button.dart';
 import 'package:x_weather/presentaion/widgets/search_box.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
@@ -69,9 +71,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (state is HomeResponseState) ...{
                         state.cities.fold(
                           // todo error response
-                          (l) => Text(
-                            'error response ${3600.convertTimezoneToHours()}',
-                            style: const TextStyle(color: Colors.white),
+                          (errorMessage) => Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(width: double.infinity),
+                                Image.asset(
+                                  AssetsData.light().images.ic_error_png,
+                                  height: 220,
+                                  width: 220,
+                                ),
+                                const SizedBox(height: 16),
+                                CusttomButton(
+                                  onTap: () {
+                                    context
+                                        .read<HomeBloc>()
+                                        .add(HomeRequestGetCitiesEvent());
+                                  },
+                                  textMessage: 'try again',
+                                  iconData: Ionicons.refresh_circle,
+                                )
+                              ],
+                            ),
                           ),
                           (weatherData) => Expanded(
                             child: RefreshIndicator(
