@@ -76,7 +76,7 @@ class ItemWeatherData extends StatelessWidget {
                                 weatherData.id!),
                           );
                     },
-                    textMessage: 'delete',
+                    textMessage: 'Delete',
                     iconData: CupertinoIcons.delete,
                   ),
                   const SizedBox(height: 8),

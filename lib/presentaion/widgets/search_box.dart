@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
+import 'package:x_weather/presentaion/widgets/custom_loading.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 class SearchBox extends StatelessWidget {
@@ -60,11 +61,24 @@ class SearchBox extends StatelessWidget {
         controller: _searchController,
         itemBuilder: (context, value) {
           return ListTile(
-            leading: const Icon(Ionicons.location),
+            leading: const Icon(
+              Ionicons.location,
+              color: Colors.white,
+            ),
             title: Text(value.city),
             subtitle: Text('${value.city}, ${value.country}'),
+            iconColor: Colors.white,
+            textColor: Colors.white,
+            tileColor: Constants.solid2,
+            selectedTileColor: Constants.solid3,
           );
         },
+        loadingBuilder: (context) => Container(
+          width: double.infinity,
+          height: 32,
+          color: Constants.solid2,
+          child: const CustomLoading(),
+        ),
         onSelected: (value) {
           _searchController.clear();
           context

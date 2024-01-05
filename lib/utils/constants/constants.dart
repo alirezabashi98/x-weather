@@ -6,14 +6,19 @@ class Constants {
 
   static String errorMessage = 'An error occurred... Please try again';
 
+  static Color solid1 = const Color(0xff48319d);
+  static Color solid2 = const Color(0xff1f1d47);
+  static Color solid3 = const Color(0xffc427fb);
+  static Color solid4 = const Color(0xffe0d9ff);
+
   static Color primary = const Color(0xffffffff);
   static Color secondary = const Color(0xffebebf5).withOpacity(0.6);
   static Color tertiary = const Color(0xffebebf5).withOpacity(0.3);
   static Color quaternary = const Color(0xffebebf5).withOpacity(0.18);
 
   static List<Color> linera1 = [
-    Color(0xff2e335a),
-    Color(0xff1c1b33)
+    const Color(0xff2e335a),
+    const Color(0xff1c1b33)
   ];
   static List<Color> linera2 = [
     const Color(0xff5936b4),

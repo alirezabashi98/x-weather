@@ -10,6 +10,7 @@ import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
 import 'package:x_weather/presentaion/bloc/home/home_state.dart';
 import 'package:x_weather/presentaion/widgets/custom_button.dart';
+import 'package:x_weather/presentaion/widgets/custom_loading.dart';
 import 'package:x_weather/presentaion/widgets/search_box.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (state is HomeLoadingState) ...{
                         const Expanded(
                           child: Center(
-                            child: CircularProgressIndicator(),
+                            child: CustomLoading() ,
                           ),
                         ),
                       },
@@ -106,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: weatherData.length,
                                 itemBuilder: (context, index) {
                                   return ItemWeatherData(
-                                      weatherData: weatherData[index]);
+                                    weatherData: weatherData[index],
+                                  );
                                 },
                               ),
                             ),
