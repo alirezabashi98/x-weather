@@ -8,7 +8,7 @@ void main() async {
   var citiesBox = await Hive.openBox<String>('cities');
   var appDataBox = await Hive.openBox<bool>('appData');
   if (appDataBox.get('firesrun') ?? true) {
-    citiesBox.putAll({112931: 'tehran'});
+    citiesBox.putAll({112931: 'Tehran',292223:'Dubai',2643743:'London',5128581:'New York'});
     appDataBox.put('firesrun', false);
   }
 

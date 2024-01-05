@@ -47,7 +47,7 @@ class SearchBox extends StatelessWidget {
               disabledBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               fillColor: Colors.transparent,
-              hintText: 'Senders name',
+              hintText: 'Add Location...',
               hintStyle: TextStyle(color: Constants.secondary),
               icon: const Icon(
                 Ionicons.search_outline,

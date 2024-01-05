@@ -20,7 +20,7 @@ class ItemWeatherData extends StatelessWidget {
     return Container(
       height: 194,
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 24, bottom: 8),
+      margin: const EdgeInsets.only(top: 4, bottom: 24),
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/bg_item_weather.png"),
