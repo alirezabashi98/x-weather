@@ -14,11 +14,16 @@ class SearchBox extends StatelessWidget {
     super.key,
     required TextEditingController searchController,
     required IWeatherDatasource weatherRepository,
-  })  : _searchController = searchController,
-        _weatherRepository = weatherRepository;
+    required FocusNode focusNode,
+  })
+      : _searchController = searchController,
+        _weatherRepository = weatherRepository,
+        _focusNode = focusNode
+  ;
 
   final TextEditingController _searchController;
   final IWeatherDatasource _weatherRepository;
+  final FocusNode _focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +32,15 @@ class SearchBox extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: Constants.linera1,
-          ),
-          borderRadius: BorderRadius.circular(16),),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: Constants.linera1,
+        ),
+        borderRadius: BorderRadius.circular(16),),
       child: TypeAheadField(
+        controller: _searchController,
+        focusNode:_focusNode,
         builder: (context, controller, focusNode) {
           return TextField(
             controller: controller,
@@ -59,12 +66,13 @@ class SearchBox extends StatelessWidget {
             ),
           );
         },
-        controller: _searchController,
-        itemBuilder: (context,SearchCityInfoResponseModel value) {
+
+        itemBuilder: (context, SearchCityInfoResponseModel value) {
           return ItemSearchWidget(value: value);
         },
         loadingBuilder: (context) => const ItemLoadingSearchWidget(),
         onSelected: (value) {
+          _focusNode.unfocus();
           _searchController.clear();
           context
               .read<HomeBloc>()
@@ -96,6 +104,7 @@ class ItemLoadingSearchWidget extends StatelessWidget {
 
 class ItemSearchWidget extends StatelessWidget {
   final SearchCityInfoResponseModel value;
+
   const ItemSearchWidget({
     super.key,
     required this.value

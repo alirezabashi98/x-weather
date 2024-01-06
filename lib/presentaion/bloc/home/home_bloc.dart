@@ -16,6 +16,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<HomeRequestGetCitiesEvent>((event, emit) async {
       emit(HomeLoadingState());
+      /// اگر بخوایم لیست برعکس بشه ایتم های جدید بالا باشن قدیمی ها پاییت بجای استان خالی اونهارو برعکس میکنیم و میدیم
+      /// cities.reversed.toList()
       var response = await _weatherRepository.getWeatherFromListCities(cities);
       emit(HomeResponseState(response));
     });

@@ -35,6 +35,7 @@ class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
 class _HomeScreenState extends State<HomeScreen> {
   final IWeatherDatasource _weatherRepository = locator.get();
   final TextEditingController _searchController = TextEditingController();
+  final FocusNode _focusNode= FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SearchBox(
                         searchController: _searchController,
                         weatherRepository: _weatherRepository,
+                        focusNode: _focusNode,
                       ),
                       const SizedBox(height: 24),
                       if (state is HomeLoadingState) ...{
@@ -103,6 +105,7 @@ class ListWeatherDataWidget extends StatelessWidget {
           context.read<HomeBloc>().add(HomeRequestGetCitiesEvent());
         },
         child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: weatherData.length,
           itemBuilder: (context, index) {
             return ItemWeatherData(
