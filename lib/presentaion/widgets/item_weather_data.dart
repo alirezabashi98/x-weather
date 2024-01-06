@@ -17,7 +17,7 @@ class ItemWeatherData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 194,
       width: double.infinity,
       margin: const EdgeInsets.only(top: 4, bottom: 24),
       decoration: const BoxDecoration(
@@ -59,7 +59,7 @@ class WeatherDataWidget extends StatelessWidget {
               '${weatherData.main!.temp!.round()}\u00B0',
               style: TextStyle(fontSize: 64, color: Constants.primary),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Text(
               weatherData.timezone.convertTimezoneToHours(),
               style: TextStyle(color: Constants.secondary, fontSize: 16),
