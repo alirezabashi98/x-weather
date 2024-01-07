@@ -41,6 +41,7 @@ class SearchBox extends StatelessWidget {
       child: TypeAheadField(
         controller: _searchController,
         focusNode:_focusNode,
+        /// خود TextField چه ظاهی داشته باشه
         builder: (context, controller, focusNode) {
           return TextField(
             controller: controller,
@@ -67,10 +68,18 @@ class SearchBox extends StatelessWidget {
           );
         },
 
+        /// بعد اینکه ریسپانس امد هر ایتم چه ui داشته باشه
         itemBuilder: (context, SearchCityInfoResponseModel value) {
           return ItemSearchWidget(value: value);
         },
+
+        /// تا وقتی که ریسپانس میاد که لودیتگ داشته باشه
         loadingBuilder: (context) => const ItemLoadingSearchWidget(),
+
+        /// وقتی یه ایتم انتخاب شد چه اتفاقی بیوفته
+        /// اینجا گفتیم کیبورد ببند
+        /// هرچی کاربر وارد کرده پاک کن
+        /// و شهر جدید به لیست اضافه بکن
         onSelected: (value) {
           _focusNode.unfocus();
           _searchController.clear();
@@ -78,6 +87,9 @@ class SearchBox extends StatelessWidget {
               .read<HomeBloc>()
               .add(HomeRequestAddCityAndGetCitiesEvent(value.city));
         },
+
+        /// به کجا ریکوست بزنه
+        ///  متن تایپ شده بده لیست بگیره برای نمایش
         suggestionsCallback: (String search) {
           return _weatherRepository.searchCityByName(search);
         },
@@ -86,6 +98,7 @@ class SearchBox extends StatelessWidget {
   }
 }
 
+/// وجت لودیتگ تا دیتا بیاد
 class ItemLoadingSearchWidget extends StatelessWidget {
   const ItemLoadingSearchWidget({
     super.key,
@@ -102,6 +115,7 @@ class ItemLoadingSearchWidget extends StatelessWidget {
   }
 }
 
+/// ویجت برای ایتم های سرچ باکس
 class ItemSearchWidget extends StatelessWidget {
   final SearchCityInfoResponseModel value;
 

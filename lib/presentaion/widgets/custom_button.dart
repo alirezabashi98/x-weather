@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
-class CusttomButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final double? width;
   final double? height;
   final Widget? text;
@@ -9,7 +9,7 @@ class CusttomButton extends StatelessWidget {
   final String? textMessage;
   final IconData? iconData;
   final Function() onTap;
-  const CusttomButton(
+  const CustomButton(
       {super.key,
       this.width,
       this.height,

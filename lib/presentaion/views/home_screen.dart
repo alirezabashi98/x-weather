@@ -58,12 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Column(
                     children: [
                       const SizedBox(height: 24),
+                      /// سرچ باکسی که بتونه استان جدید به لیست اضافه بکنه
                       SearchBox(
                         searchController: _searchController,
                         weatherRepository: _weatherRepository,
                         focusNode: _focusNode,
                       ),
+
                       const SizedBox(height: 24),
+
+                      /// منتظر پاسخ سرور هستیم
                       if (state is HomeLoadingState) ...{
                         const Expanded(
                           child: Center(
@@ -71,6 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       },
+
+                      /// نتیجه گرفتن اب هوای استان ها وقتی امد طبق ریسپانس ui بساز
                       if (state is HomeResponseState) ...{
                         state.cities.fold(
                           (errorMessage) => const ErrorGetWeatherCitiesWidget(),
@@ -90,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+/// اگر لیست اب هوا ها اطلاعات درست امد لیست بساز و نمایش بده
 class ListWeatherDataWidget extends StatelessWidget {
   final List<WeatherResponseModel> weatherData;
   const ListWeatherDataWidget({
@@ -118,6 +125,8 @@ class ListWeatherDataWidget extends StatelessWidget {
   }
 }
 
+/// پیغام خطا
+/// اگر نتونست هیچ استانی رو بالا بیاره و کامل به خطا خورد
 class ErrorGetWeatherCitiesWidget extends StatelessWidget {
   const ErrorGetWeatherCitiesWidget({
     super.key,
@@ -137,7 +146,7 @@ class ErrorGetWeatherCitiesWidget extends StatelessWidget {
             width: 220,
           ),
           const SizedBox(height: 16),
-          CusttomButton(
+          CustomButton(
             onTap: () {
               context.read<HomeBloc>().add(HomeRequestGetCitiesEvent());
             },

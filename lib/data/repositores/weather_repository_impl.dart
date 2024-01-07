@@ -11,6 +11,7 @@ class WeatherRepositoryImpl extends IWeatherRepository {
   final IWeatherDatasource _weatherDatasorce = locator.get();
   final _citiesDB = Hive.box<String>('cities');
 
+  /// گرفتن اطلاعات اب و هوای یک استان از دیتاسورس
   @override
   Future<Either<String, WeatherResponseModel>> getWeatherCityName(
       String name) async {
@@ -22,6 +23,7 @@ class WeatherRepositoryImpl extends IWeatherRepository {
     }
   }
 
+  /// گرفتن اطلاعات اب و هوای همه استان های یک لیست
   @override
   Future<Either<String, List<WeatherResponseModel>>> getWeatherFromListCities(
       List<String> names) async {
@@ -30,8 +32,12 @@ class WeatherRepositoryImpl extends IWeatherRepository {
 
       for (var name in names) {
         try {
+          /// به دیتابیس ریکوست بزن و هر اب هوای که گرفتی به لیست اضافه بکن
           var response = await _weatherDatasorce.getWeatherCityName(name);
           listCities.add(response);
+
+          /// اگر استان اسم و id داست
+          /// و اگر داخل خود دیتابیس ما نبود این استان جدید به دیتابیس اضافه بکن
 
           /// saved new city in hive db
           if (response.name != null &&
@@ -39,8 +45,8 @@ class WeatherRepositoryImpl extends IWeatherRepository {
               !_citiesDB.keys.contains(response.id)) {
             _citiesDB.put(response.id, response.name!);
           }
-
         } catch (ex) {
+          /// احتمال زیاد وقتی پاسخی نمیاد از open weather یعنی اون استان پشتیبانی نمیکنه ولی خب ما از api دیگه ای برای گرفتن استان ها استفاده میکنیم پس باید اینطوری هندل کنیم این خطارو
           // ignore: avoid_print
           print('استان پشتیبانی نمیشه توسط سرور');
         }
@@ -52,6 +58,7 @@ class WeatherRepositoryImpl extends IWeatherRepository {
     }
   }
 
+  /// جستجو یک استان طبق اسمش
   @override
   Future<Either<String, List<SearchCityInfoResponseModel>>> searchCityByName(
       String name) async {

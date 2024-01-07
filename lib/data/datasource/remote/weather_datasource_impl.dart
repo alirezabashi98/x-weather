@@ -10,6 +10,8 @@ class WeatherDatasourceImpl extends IWeatherDatasource {
   final Dio _dio = locator.get();
   final Dio _dioProvider = locator.get<ApiProvider>().getRawDio();
 
+  /// اسم یک استان میگیره و اطلاعات اب هوای اون منطقه برمیگردونه
+  /// به api با پارامتر units گفتیم ساتنی گراد برگردونه
   @override
   Future<WeatherResponseModel> getWeatherCityName(String name) async {
     try {
@@ -24,6 +26,18 @@ class WeatherDatasourceImpl extends IWeatherDatasource {
     }
   }
 
+  /// سرچ بین استان ها
+  /// از اونجای که خود سایتی که ازش اب هوا میگیریم open weather در نتیجه از این api استفاده میکنیم
+  /// ولی احتمال داره بعضی استان ها open weather پشتیبانی نکنه
+  /// برای همین در ریپازیتوری باید حواسمون به این موضوع باشه برنامه کرش نکنه
+
+  /// limit : مشخص میکنه چند تا پاسخ از سرور بیاد مثلا گفتیم 7 استان بیشتر برنگردون
+
+  /// offset : گفتیم اگر هیچ کارکتری هم وارد نشد بود سرچ زدن رو شروع بکنه
+  /// دقیق تر بخوام بگم میگه چند کارکتر کاربر وارد کرد شروع کنم جستجو استان ها و نتیجه برگردونم
+  /// گفتیم هیچی هم وارد نکرده بود همین که ریکوست زده شد پاسخ برگردون
+
+  /// namePrefix : متنی که کاربر وترد میکمه طبق این متن استان ها فیلتر میشن
   @override
   Future<List<SearchCityInfoResponseModel>> searchCityByName(
       String name) async {

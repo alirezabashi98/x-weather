@@ -98,7 +98,7 @@ class IconAndDeleteButtonWidget extends StatelessWidget {
             child: Image.asset(
                 'assets/images/ic_${weatherData.weather![0].icon}.png'),
           ),
-          CusttomButton(
+          CustomButton(
             onTap: () {
               context.read<HomeBloc>().add(
                     HomeRequestRemoveCityAndGetCitiesEvent(weatherData.id!),
