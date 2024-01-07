@@ -1,16 +1,47 @@
-# x_weather
+# X Weather
+<p float="left">
+  <img src="screenshot/cover.jpg" alt="x weather cover" />
+</p>
 
-A new Flutter project.
+A weather project to practice writing cleanly
+* state management bloc.
+* Clean architecture.
+* Dependency injection.
+* solid.
+* Multi-platform.
 
-## Getting Started
+## screenshots
+<p float="left">
+  <img src="screenshot/folder_structure.png" alt="x weather folder structure" />
+  <img src="screenshot/home.png" width="250px"  alt="home screen" />
+  <img src="screenshot/search.png" width="250px"  alt="search box" />
+</p>
 
-This project is a starting point for a Flutter application.
+### android application ( mobile[android,ios] )
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Developers
+Please subscribe into our [Telegram channel](https://t.me/alirezabashi_98) and to contact with the developer click this [link address.](https://t.me/alirezabashi98)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+for flutter developers:
+### Getting Started
+```shel
+https://github.com/alirezabashi98/x-weather.git
+ch x-weather
+flutter pub get
+flutter run 
+```
+
+For the rest of the operating systems, you can also use the following command, for example, for Linux as below, if there are several, put a comma between them as below
+
+```shel
+flutter create . --platforms=linux,android
+```
+
+this repo will be updated :blue_heart: .
+
+
+## Links
+
+* [Youtube channel](https://www.youtube.com/@alirezabashi98)
+* [Instagram](https://instagram.com/alirezabashi98)
