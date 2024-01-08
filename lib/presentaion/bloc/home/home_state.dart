@@ -1,11 +1,23 @@
-import 'package:dartz/dartz.dart';
-import 'package:x_weather/domain/models/response/weather_response_model.dart';
+import 'package:x_weather/presentaion/bloc/home/sort_state.dart';
+import 'package:x_weather/presentaion/bloc/home/weather_list_state.dart';
 
-abstract class HomeState {}
+class HomeState {
+  final SortState sortState;
 
-class HomeLoadingState extends HomeState {}
+  final WeatherListState weatherListState;
 
-class HomeResponseState extends HomeState {
-  Either<String, List<WeatherResponseModel>> cities;
-  HomeResponseState(this.cities);
+  HomeState({
+    required this.sortState,
+    required this.weatherListState,
+  });
+
+  HomeState copyWith({
+    SortState? newSortState,
+    WeatherListState? newWeatherListState,
+  }) {
+    return HomeState(
+      sortState: newSortState ?? sortState,
+      weatherListState: newWeatherListState ?? weatherListState,
+    );
+  }
 }

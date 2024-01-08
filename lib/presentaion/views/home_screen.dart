@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -11,6 +12,8 @@ import 'package:x_weather/locator.dart';
 import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
 import 'package:x_weather/presentaion/bloc/home/home_state.dart';
+import 'package:x_weather/presentaion/bloc/home/sort_state.dart';
+import 'package:x_weather/presentaion/bloc/home/weather_list_state.dart';
 import 'package:x_weather/presentaion/widgets/custom_button.dart';
 import 'package:x_weather/presentaion/widgets/custom_loading.dart';
 import 'package:x_weather/presentaion/widgets/search_box.dart';
@@ -37,7 +40,7 @@ class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
 class _HomeScreenState extends State<HomeScreen> {
   final ISearchDatasource _weatherDatasource = locator.get();
   final TextEditingController _searchController = TextEditingController();
-  final FocusNode _focusNode= FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +60,36 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
+                  bool sort = (state.sortState as SortResponseState).sortState == SortWeatherList.sortTopToDown;
                   return Column(
                     children: [
                       const SizedBox(height: 24),
-                      /// سرچ باکسی که بتونه استان جدید به لیست اضافه بکنه
-                      SearchBox(
-                        searchController: _searchController,
-                        searchDatasource: _weatherDatasource,
-                        focusNode: _focusNode,
+                      Row(
+                        children: [
+                          /// سرچ باکسی که بتونه استان جدید به لیست اضافه بکنه
+                          Expanded(
+                            child: SearchBox(
+                              searchController: _searchController,
+                              searchDatasource: _weatherDatasource,
+                              focusNode: _focusNode,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          CustomButton(
+                            width: 50,
+                            onTap: () {
+                              context.read<HomeBloc>().add(HomeRequestEditSortEvent(sort ? SortWeatherList.sortDownToTop : SortWeatherList.sortTopToDown));
+                            },
+                            textMessage: '',
+                            iconData: sort ? CupertinoIcons.sort_down : CupertinoIcons.sort_up,
+                          ),
+                        ],
                       ),
 
                       const SizedBox(height: 24),
 
                       /// منتظر پاسخ سرور هستیم
-                      if (state is HomeLoadingState) ...{
+                      if (state.weatherListState is WeatherListInitState) ...{
                         const Expanded(
                           child: Center(
                             child: CustomLoading(),
@@ -79,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
 
                       /// نتیجه گرفتن اب هوای استان ها وقتی امد طبق ریسپانس ui بساز
-                      if (state is HomeResponseState) ...{
-                        state.cities.fold(
+                      if (state.weatherListState is WeatherListResponseState) ...{
+                        (state.weatherListState as WeatherListResponseState).cities.fold(
                           (errorMessage) => const ErrorGetWeatherCitiesWidget(),
                           (weatherData) =>
                               ListWeatherDataWidget(weatherData: weatherData),
@@ -101,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
 /// اگر لیست اب هوا ها اطلاعات درست امد لیست بساز و نمایش بده
 class ListWeatherDataWidget extends StatelessWidget {
   final List<WeatherResponseModel> weatherData;
+
   const ListWeatherDataWidget({
     super.key,
     required this.weatherData,
