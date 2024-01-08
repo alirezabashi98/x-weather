@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
+import 'package:x_weather/domain/models/response/forecast_weather_response_model.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
 import 'package:x_weather/domain/repository/weather_repository.dart';
 import 'package:x_weather/locator.dart';
@@ -52,6 +53,19 @@ class WeatherRepositoryImpl extends IWeatherRepository {
       }
 
       return right(listCities);
+    } catch (ex) {
+      return left(Constants.errorMessage);
+    }
+  }
+
+  @override
+  Future<Either<String, List<ForecastWeatherResponseModel>>>
+      getTheWeatherForTheNextFewDays(String name) async {
+    try {
+      var response =
+          await _weatherDatasource.getTheWeatherForTheNextFewDays(name);
+
+      return right(response);
     } catch (ex) {
       return left(Constants.errorMessage);
     }

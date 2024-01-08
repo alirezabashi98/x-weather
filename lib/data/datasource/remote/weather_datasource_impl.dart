@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
 
+import '../../../domain/models/response/forecast_weather_response_model.dart';
 import '../../../locator.dart';
 
 class WeatherDatasourceImpl extends IWeatherDatasource {
@@ -13,11 +14,25 @@ class WeatherDatasourceImpl extends IWeatherDatasource {
   Future<WeatherResponseModel> getWeatherCityName(String name) async {
     try {
       var response = await _dio.get(
-        'data/2.5/weather',
+        'weather',
         queryParameters: {'q': name, 'units': 'metric'},
       );
 
       return WeatherResponseModel.fromJson(response.data);
+    } catch (ex) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ForecastWeatherResponseModel>> getTheWeatherForTheNextFewDays(String name) async{
+    try {
+      var response = await _dio.get(
+        'forecast',
+        queryParameters: {'q': name, 'units': 'metric'},
+      );
+
+      return response.data['list'].map<ForecastWeatherResponseModel>((json)=>ForecastWeatherResponseModel.fromJson(json)).toList();
     } catch (ex) {
       rethrow;
     }
