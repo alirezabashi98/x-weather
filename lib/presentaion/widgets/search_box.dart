@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:x_weather/domain/datasource/search_datasourse.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/search_city_info_response_model.dart';
+import 'package:x_weather/domain/repository/search_repository.dart';
 import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
 import 'package:x_weather/presentaion/widgets/custom_loading.dart';
@@ -13,16 +15,16 @@ class SearchBox extends StatelessWidget {
   const SearchBox({
     super.key,
     required TextEditingController searchController,
-    required IWeatherDatasource weatherRepository,
+    required ISearchDatasource searchDatasource,
     required FocusNode focusNode,
   })
       : _searchController = searchController,
-        _weatherRepository = weatherRepository,
+        _searchDatasource = searchDatasource,
         _focusNode = focusNode
   ;
 
   final TextEditingController _searchController;
-  final IWeatherDatasource _weatherRepository;
+  final ISearchDatasource _searchDatasource;
   final FocusNode _focusNode;
 
   @override
@@ -91,7 +93,7 @@ class SearchBox extends StatelessWidget {
         /// به کجا ریکوست بزنه
         ///  متن تایپ شده بده لیست بگیره برای نمایش
         suggestionsCallback: (String search) {
-          return _weatherRepository.searchCityByName(search);
+          return _searchDatasource.searchCityByName(search);
         },
       ),
     );

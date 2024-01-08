@@ -8,6 +8,4 @@ abstract class IWeatherRepository{
     Future<Either<String,WeatherResponseModel>> getWeatherCityName(String name);
     /// گرفتن اب هوای لیستی از استان ها
     Future<Either<String,List<WeatherResponseModel>>> getWeatherFromListCities(List<String> names);
-    /// جستجو یک استان
-    Future<Either<String,List<SearchCityInfoResponseModel>>> searchCityByName(String name);
 }

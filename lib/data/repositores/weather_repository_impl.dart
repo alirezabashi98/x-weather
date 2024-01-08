@@ -57,17 +57,4 @@ class WeatherRepositoryImpl extends IWeatherRepository {
       return left(Constants.errorMessage);
     }
   }
-
-  /// جستجو یک استان طبق اسمش
-  @override
-  Future<Either<String, List<SearchCityInfoResponseModel>>> searchCityByName(
-      String name) async {
-    try {
-      var response = await _weatherDatasorce.searchCityByName(name);
-
-      return right(response);
-    } catch (ex) {
-      return left(Constants.errorMessage);
-    }
-  }
 }

@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:x_weather/assets/assets.dart';
+import 'package:x_weather/domain/datasource/search_datasourse.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
+import 'package:x_weather/domain/repository/search_repository.dart';
 import 'package:x_weather/locator.dart';
 import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
 import 'package:x_weather/presentaion/bloc/home/home_event.dart';
@@ -33,7 +35,7 @@ class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final IWeatherDatasource _weatherRepository = locator.get();
+  final ISearchDatasource _weatherDatasource = locator.get();
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode= FocusNode();
 
@@ -61,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       /// سرچ باکسی که بتونه استان جدید به لیست اضافه بکنه
                       SearchBox(
                         searchController: _searchController,
-                        weatherRepository: _weatherRepository,
+                        searchDatasource: _weatherDatasource,
                         focusNode: _focusNode,
                       ),
 
