@@ -10,13 +10,18 @@ import 'package:x_weather/presentaion/bloc/home/weather_list_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IWeatherRepository _weatherRepository = locator.get();
   final _citiesDB = Hive.box<String>('cities');
+  final _sortDB = Hive.box<bool>('sort');
   List<String> cities = [];
 
   HomeBloc()
-      : super(HomeState(
+      : super(
+          HomeState(
             sortState: SortResponseState(SortWeatherList.sortTopToDown),
-            weatherListState: WeatherListInitState())) {
+            weatherListState: WeatherListInitState(),
+          ),
+        ) {
     /// add saved cities
+
     cities.addAll(_citiesDB.values);
 
     on<HomeRequestGetCitiesEvent>((event, emit) async {
@@ -26,8 +31,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       /// cities.reversed.toList()
       ///
       /// درخواست برای گرفتن اب و هوای همه استان های انتخاب شده
-      List<String> sortCities = (state.sortState as SortResponseState).sortState == SortWeatherList.sortTopToDown ? cities : cities.reversed.toList();
-      var response = await _weatherRepository.getWeatherFromListCities(sortCities);
+      // bool sortTopToDown = _sortDB.get('sortTopToDown') ?? true;
+      bool sortTopToDown = (state.sortState as SortResponseState).sortState ==
+          SortWeatherList.sortTopToDown;
+      var response = await _weatherRepository.getWeatherFromListCities(
+          sortTopToDown ? cities : cities.reversed.toList());
       emit(state.copyWith(
           newWeatherListState: WeatherListResponseState(response)));
     });
@@ -57,6 +65,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<HomeRequestEditSortEvent>((event, emit) async {
       emit(state.copyWith(newSortState: SortResponseState(event.sort)));
+      bool sortTopToDown = (state.sortState as SortResponseState).sortState ==
+          SortWeatherList.sortTopToDown;
+      _sortDB.put('sortTopToDown', sortTopToDown);
+      add(HomeRequestGetCitiesEvent());
+    });
+
+    on<HomeSetInitSortEvent>((event, emit) async {
+      bool sortTopToDown = _sortDB.get('sortTopToDown') ?? true;
+      emit(
+        state.copyWith(
+          newSortState: SortResponseState((sortTopToDown)
+              ? SortWeatherList.sortTopToDown
+              : SortWeatherList.sortDownToTop),
+        ),
+      );
       add(HomeRequestGetCitiesEvent());
     });
   }

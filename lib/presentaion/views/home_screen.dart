@@ -31,7 +31,7 @@ class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider.value(
-      value: locator.get<HomeBloc>()..add(HomeRequestGetCitiesEvent()),
+      value: locator.get<HomeBloc>()..add(HomeSetInitSortEvent()),
       child: this,
     );
   }
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
-                  bool sort = (state.sortState as SortResponseState).sortState == SortWeatherList.sortTopToDown;
+                  bool sortTopToDown = (state.sortState as SortResponseState).sortState == SortWeatherList.sortTopToDown;
                   return Column(
                     children: [
                       const SizedBox(height: 24),
@@ -78,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           CustomButton(
                             width: 50,
                             onTap: () {
-                              context.read<HomeBloc>().add(HomeRequestEditSortEvent(sort ? SortWeatherList.sortDownToTop : SortWeatherList.sortTopToDown));
+                              context.read<HomeBloc>().add(HomeRequestEditSortEvent(sortTopToDown ? SortWeatherList.sortDownToTop : SortWeatherList.sortTopToDown));
                             },
                             textMessage: '',
-                            iconData: sort ? CupertinoIcons.sort_down : CupertinoIcons.sort_up,
+                            iconData: sortTopToDown ? CupertinoIcons.sort_down : CupertinoIcons.sort_up,
                           ),
                         ],
                       ),

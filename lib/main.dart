@@ -15,6 +15,7 @@ Future<void> initializeHive() async {
   await Hive.initFlutter();
 
   var citiesBox = await Hive.openBox<String>('cities');
+  var sortBox = await Hive.openBox<bool>('sort');
   var appDataBox = await Hive.openBox<bool>('appData');
 
   if (appDataBox.get('firstRun') ?? true) {
@@ -25,6 +26,7 @@ Future<void> initializeHive() async {
       5128581: 'New York'
     });
     appDataBox.put('firstRun', false);
+    sortBox.put('sortTopToDown', true);
   }
 }
 

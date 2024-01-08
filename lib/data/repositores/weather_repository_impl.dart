@@ -1,14 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
-import 'package:x_weather/domain/models/response/search_city_info_response_model.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
 import 'package:x_weather/domain/repository/weather_repository.dart';
 import 'package:x_weather/locator.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 class WeatherRepositoryImpl extends IWeatherRepository {
-  final IWeatherDatasource _weatherDatasorce = locator.get();
+  final IWeatherDatasource _weatherDatasource = locator.get();
   final _citiesDB = Hive.box<String>('cities');
 
   /// گرفتن اطلاعات اب و هوای یک استان از دیتاسورس
@@ -16,7 +15,7 @@ class WeatherRepositoryImpl extends IWeatherRepository {
   Future<Either<String, WeatherResponseModel>> getWeatherCityName(
       String name) async {
     try {
-      var response = await _weatherDatasorce.getWeatherCityName(name);
+      var response = await _weatherDatasource.getWeatherCityName(name);
       return right(response);
     } catch (ex) {
       return left(Constants.errorMessage);
@@ -33,7 +32,7 @@ class WeatherRepositoryImpl extends IWeatherRepository {
       for (var name in names) {
         try {
           /// به دیتابیس ریکوست بزن و هر اب هوای که گرفتی به لیست اضافه بکن
-          var response = await _weatherDatasorce.getWeatherCityName(name);
+          var response = await _weatherDatasource.getWeatherCityName(name);
           listCities.add(response);
 
           /// اگر استان اسم و id داست
