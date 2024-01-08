@@ -13,7 +13,7 @@ class ForecastWeatherResponseModel {
 
   factory ForecastWeatherResponseModel.fromJson(Map<String, dynamic> json) {
     return ForecastWeatherResponseModel(
-      temp: json['main']['main'],
+      temp: double.parse(json['main']['temp'].toString()).round(),
       icon: json['weather'][0]['icon'],
       dtTxt: json['dt_txt'],
     );
