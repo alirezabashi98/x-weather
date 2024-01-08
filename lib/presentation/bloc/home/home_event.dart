@@ -1,4 +1,4 @@
-import 'package:x_weather/presentaion/bloc/home/sort_state.dart';
+import 'package:x_weather/presentation/bloc/home/sort_state.dart';
 
 abstract class HomeEvent {}
 

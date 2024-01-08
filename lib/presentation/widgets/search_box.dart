@@ -6,9 +6,9 @@ import 'package:x_weather/domain/datasource/search_datasourse.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/search_city_info_response_model.dart';
 import 'package:x_weather/domain/repository/search_repository.dart';
-import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
-import 'package:x_weather/presentaion/bloc/home/home_event.dart';
-import 'package:x_weather/presentaion/widgets/custom_loading.dart';
+import 'package:x_weather/presentation/bloc/home/home_bloc.dart';
+import 'package:x_weather/presentation/bloc/home/home_event.dart';
+import 'package:x_weather/presentation/widgets/custom_loading.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 class SearchBox extends StatelessWidget {

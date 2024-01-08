@@ -6,7 +6,7 @@ import 'package:x_weather/data/datasource/remote/weather_datasource_impl.dart';
 import 'package:x_weather/data/repositores/weather_repository_impl.dart';
 import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/repository/weather_repository.dart';
-import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
+import 'package:x_weather/presentation/bloc/home/home_bloc.dart';
 
 import 'data/repositores/search_repository_impl.dart';
 import 'domain/datasource/search_datasourse.dart';

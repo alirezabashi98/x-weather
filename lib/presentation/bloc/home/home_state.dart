@@ -1,5 +1,5 @@
-import 'package:x_weather/presentaion/bloc/home/sort_state.dart';
-import 'package:x_weather/presentaion/bloc/home/weather_list_state.dart';
+import 'package:x_weather/presentation/bloc/home/sort_state.dart';
+import 'package:x_weather/presentation/bloc/home/weather_list_state.dart';
 
 class HomeState {
   final SortState sortState;

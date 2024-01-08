@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
-import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
-import 'package:x_weather/presentaion/bloc/home/home_event.dart';
-import 'package:x_weather/presentaion/widgets/custom_button.dart';
+import 'package:x_weather/presentation/bloc/home/home_bloc.dart';
+import 'package:x_weather/presentation/bloc/home/home_event.dart';
+import 'package:x_weather/presentation/widgets/custom_button.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
 
 class ItemWeatherData extends StatelessWidget {
   final WeatherResponseModel weatherData;
+
   const ItemWeatherData({
     super.key,
     required this.weatherData,

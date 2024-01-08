@@ -15,13 +15,61 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    DetailWeatherRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailWeatherRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: DetailWeatherScreen(
+          key: args.key,
+          cityName: args.cityName,
+        ),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const HomeScreen(),
+        child: WrappedRoute(child: const HomeScreen()),
       );
-    }
+    },
   };
+}
+
+/// generated route for
+/// [DetailWeatherScreen]
+class DetailWeatherRoute extends PageRouteInfo<DetailWeatherRouteArgs> {
+  DetailWeatherRoute({
+    Key? key,
+    required String cityName,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DetailWeatherRoute.name,
+          args: DetailWeatherRouteArgs(
+            key: key,
+            cityName: cityName,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'DetailWeatherRoute';
+
+  static const PageInfo<DetailWeatherRouteArgs> page =
+      PageInfo<DetailWeatherRouteArgs>(name);
+}
+
+class DetailWeatherRouteArgs {
+  const DetailWeatherRouteArgs({
+    this.key,
+    required this.cityName,
+  });
+
+  final Key? key;
+
+  final String cityName;
+
+  @override
+  String toString() {
+    return 'DetailWeatherRouteArgs{key: $key, cityName: $cityName}';
+  }
 }
 
 /// generated route for

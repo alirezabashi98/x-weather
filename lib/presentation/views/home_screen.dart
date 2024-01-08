@@ -4,19 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:x_weather/assets/assets.dart';
+import 'package:x_weather/config/router/app_router.dart';
 import 'package:x_weather/domain/datasource/search_datasourse.dart';
-import 'package:x_weather/domain/datasource/weather_datasource.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
-import 'package:x_weather/domain/repository/search_repository.dart';
 import 'package:x_weather/locator.dart';
-import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
-import 'package:x_weather/presentaion/bloc/home/home_event.dart';
-import 'package:x_weather/presentaion/bloc/home/home_state.dart';
-import 'package:x_weather/presentaion/bloc/home/sort_state.dart';
-import 'package:x_weather/presentaion/bloc/home/weather_list_state.dart';
-import 'package:x_weather/presentaion/widgets/custom_button.dart';
-import 'package:x_weather/presentaion/widgets/custom_loading.dart';
-import 'package:x_weather/presentaion/widgets/search_box.dart';
+import 'package:x_weather/presentation/bloc/home/home_bloc.dart';
+import 'package:x_weather/presentation/bloc/home/home_event.dart';
+import 'package:x_weather/presentation/bloc/home/home_state.dart';
+import 'package:x_weather/presentation/bloc/home/sort_state.dart';
+import 'package:x_weather/presentation/bloc/home/weather_list_state.dart';
+import 'package:x_weather/presentation/widgets/custom_button.dart';
+import 'package:x_weather/presentation/widgets/custom_loading.dart';
+import 'package:x_weather/presentation/widgets/search_box.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 import '../widgets/item_weather_data.dart';
@@ -60,7 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
-                  bool sortTopToDown = (state.sortState as SortResponseState).sortState == SortWeatherList.sortTopToDown;
+                  bool sortTopToDown =
+                      (state.sortState as SortResponseState).sortState ==
+                          SortWeatherList.sortTopToDown;
                   return Column(
                     children: [
                       const SizedBox(height: 24),
@@ -78,10 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           CustomButton(
                             width: 50,
                             onTap: () {
-                              context.read<HomeBloc>().add(HomeRequestEditSortEvent(sortTopToDown ? SortWeatherList.sortDownToTop : SortWeatherList.sortTopToDown));
+                              context.read<HomeBloc>().add(
+                                  HomeRequestEditSortEvent(sortTopToDown
+                                      ? SortWeatherList.sortDownToTop
+                                      : SortWeatherList.sortTopToDown));
                             },
                             textMessage: '',
-                            iconData: sortTopToDown ? CupertinoIcons.sort_down : CupertinoIcons.sort_up,
+                            iconData: sortTopToDown
+                                ? CupertinoIcons.sort_down
+                                : CupertinoIcons.sort_up,
                           ),
                         ],
                       ),
@@ -98,12 +104,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
 
                       /// نتیجه گرفتن اب هوای استان ها وقتی امد طبق ریسپانس ui بساز
-                      if (state.weatherListState is WeatherListResponseState) ...{
-                        (state.weatherListState as WeatherListResponseState).cities.fold(
-                          (errorMessage) => const ErrorGetWeatherCitiesWidget(),
-                          (weatherData) =>
-                              ListWeatherDataWidget(weatherData: weatherData),
-                        ),
+                      if (state.weatherListState
+                          is WeatherListResponseState) ...{
+                        (state.weatherListState as WeatherListResponseState)
+                            .cities
+                            .fold(
+                              (errorMessage) =>
+                                  const ErrorGetWeatherCitiesWidget(),
+                              (weatherData) => Expanded(
+                                child: ListWeatherDataWidget(
+                                    weatherData: weatherData),
+                              ),
+                            ),
                       },
                     ],
                   );
@@ -128,20 +140,24 @@ class ListWeatherDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: RefreshIndicator(
-        onRefresh: () async {
-          context.read<HomeBloc>().add(HomeRequestGetCitiesEvent());
-        },
-        child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(),
-          itemCount: weatherData.length,
-          itemBuilder: (context, index) {
-            return ItemWeatherData(
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<HomeBloc>().add(HomeRequestGetCitiesEvent());
+      },
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: weatherData.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              context.pushRoute(
+                  DetailWeatherRoute(cityName: weatherData[index].name!));
+            },
+            child: ItemWeatherData(
               weatherData: weatherData[index],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
