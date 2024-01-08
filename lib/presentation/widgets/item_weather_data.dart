@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:x_weather/domain/models/response/weather_response_model.dart';
-import 'package:x_weather/presentaion/bloc/home/home_bloc.dart';
-import 'package:x_weather/presentaion/bloc/home/home_event.dart';
-import 'package:x_weather/presentaion/widgets/custom_button.dart';
+import 'package:x_weather/presentation/bloc/home/home_bloc.dart';
+import 'package:x_weather/presentation/bloc/home/home_event.dart';
+import 'package:x_weather/presentation/widgets/custom_button.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 import 'package:x_weather/utils/extensions/timezone_to_hours.dart';
 
 class ItemWeatherData extends StatelessWidget {
   final WeatherResponseModel weatherData;
+
   const ItemWeatherData({
     super.key,
     required this.weatherData,
@@ -59,7 +60,7 @@ class WeatherDataWidget extends StatelessWidget {
               '${weatherData.main!.temp!.round()}\u00B0',
               style: TextStyle(fontSize: 64, color: Constants.primary),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 8),
             Text(
               weatherData.timezone.convertTimezoneToHours(),
               style: TextStyle(color: Constants.secondary, fontSize: 16),
@@ -98,7 +99,7 @@ class IconAndDeleteButtonWidget extends StatelessWidget {
             child: Image.asset(
                 'assets/images/ic_${weatherData.weather![0].icon}.png'),
           ),
-          CusttomButton(
+          CustomButton(
             onTap: () {
               context.read<HomeBloc>().add(
                     HomeRequestRemoveCityAndGetCitiesEvent(weatherData.id!),

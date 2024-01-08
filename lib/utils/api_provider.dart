@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 class ApiProvider {
+  /// برای درخواست گرفتن اب هوا
   static Dio createDio() {
     Dio dio = Dio(
       BaseOptions(
@@ -15,6 +16,7 @@ class ApiProvider {
     return dio;
   }
 
+  /// برای بقیه درخواست ها
   Dio getRawDio(){
     Dio dio = Dio();
     dio.interceptors.add(AwesomeDioInterceptor());

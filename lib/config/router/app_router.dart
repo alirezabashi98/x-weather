@@ -1,7 +1,10 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 
-import '../../presentaion/views/home_screen.dart';
+import '../../presentation/views/detail_weather_screen.dart';
+import '../../presentation/views/home_screen.dart';
+import '../../presentation/views/detail_weather_screen.dart';
+import '../../presentation/views/home_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -14,11 +17,15 @@ part 'app_router.gr.dart';
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
-    // add your routes here
-    AutoRoute(
-      page: HomeRoute.page,
-      initial: true,
-      path: '/main',
-    ),
-  ];
+        // add your routes here
+        AutoRoute(
+          page: HomeRoute.page,
+          initial: true,
+          path: '/main',
+        ),
+        AutoRoute(
+          page: DetailWeatherRoute.page,
+          path: '/detailWeather',
+        ),
+      ];
 }

@@ -13,17 +13,20 @@ void main() async {
 
 Future<void> initializeHive() async {
   await Hive.initFlutter();
+
   var citiesBox = await Hive.openBox<String>('cities');
+  var sortBox = await Hive.openBox<bool>('sort');
   var appDataBox = await Hive.openBox<bool>('appData');
 
-  if (appDataBox.get('firesrun') ?? true) {
+  if (appDataBox.get('firstRun') ?? true) {
     citiesBox.putAll({
       112931: 'Tehran',
       292223: 'Dubai',
       2643743: 'London',
       5128581: 'New York'
     });
-    appDataBox.put('firesrun', false);
+    appDataBox.put('firstRun', false);
+    sortBox.put('sortTopToDown', true);
   }
 }
 

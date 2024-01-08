@@ -78,7 +78,9 @@ class _assets_images_dart {
     required Brightness brightness,
   })  : _brightness = brightness;
 
+  final bg_detail_png = 'assets/images/bg_detail.png';
   final bg_item_weather_png = 'assets/images/bg_item_weather.png';
+  final btn_add_png = 'assets/images/btn_add.png';
   final ic_01d_png = 'assets/images/ic_01d.png';
   final ic_01n_png = 'assets/images/ic_01n.png';
   final ic_02d_png = 'assets/images/ic_02d.png';
@@ -97,6 +99,7 @@ class _assets_images_dart {
   final ic_13n_png = 'assets/images/ic_13n.png';
   final ic_50d_png = 'assets/images/ic_50d.png';
   final ic_50n_png = 'assets/images/ic_50n.png';
+  final ic_detail_home_png = 'assets/images/ic_detail_home.png';
   final ic_error_png = 'assets/images/ic_error.png';
   final n_png = 'assets/images/n.png';
 }
