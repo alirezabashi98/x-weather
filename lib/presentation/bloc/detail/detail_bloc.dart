@@ -12,16 +12,22 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   final IWeatherRepository _weatherRepository = locator.get();
 
   DetailBloc()
-      : super(DetailState(
+      : super(
+          DetailState(
             weatherState: DetailWeatherInitState(),
-            forecastWeatherState: DetailForecastWeatherInitState())) {
-
+            forecastWeatherState: DetailForecastWeatherInitState(),
+          ),
+        ) {
     on<DetailRequestWeatherTodayEvent>((event, emit) async {
       emit(state.cotyWith(newWeatherState: DetailWeatherInitState()));
       var response =
           await _weatherRepository.getWeatherCityName(event.cityName);
-      emit(state.cotyWith(
-          newWeatherState: DetailWeatherResponseState(response)));
+      emit(
+        state.cotyWith(
+          newWeatherState: DetailWeatherResponseState(response),
+        ),
+      );
+      add(DetailRequestWeatherForecastEvent(event.cityName));
     });
 
     on<DetailRequestWeatherForecastEvent>((event, emit) async {

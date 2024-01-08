@@ -7,6 +7,6 @@ class DetailState{
   DetailState({required this.weatherState,required this.forecastWeatherState});
 
   DetailState cotyWith({WeatherState? newWeatherState,ForecastWeatherState? newForecastWeatherState}){
-    return DetailState(weatherState: weatherState ?? weatherState, forecastWeatherState: forecastWeatherState ?? forecastWeatherState);
+    return DetailState(weatherState: newWeatherState ?? weatherState , forecastWeatherState: newForecastWeatherState ?? forecastWeatherState);
   }
 }
