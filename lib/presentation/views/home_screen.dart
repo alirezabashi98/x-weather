@@ -153,8 +153,16 @@ class ListWeatherDataWidget extends StatelessWidget {
               context.pushRoute(
                   DetailWeatherRoute(cityName: weatherData[index].name!));
             },
-            child: ItemWeatherData(
-              weatherData: weatherData[index],
+            child: Dismissible(
+              key: UniqueKey(),
+              onDismissed: (direction) {
+                context.read<HomeBloc>().add(
+                  HomeRequestRemoveCityAndGetCitiesEvent(weatherData[index].id!),
+                );
+              },
+              child: ItemWeatherData(
+                weatherData: weatherData[index],
+              ),
             ),
           );
         },
