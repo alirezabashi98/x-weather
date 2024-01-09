@@ -15,6 +15,7 @@ A weather project to practice writing cleanly
   <img src="screenshot/folder_structure.png" alt="x weather folder structure" />
   <img src="screenshot/home.png" width="250px"  alt="home screen" />
   <img src="screenshot/search.png" width="250px"  alt="search box" />
+  <img src="screenshot/detail.png" width="250px"  alt="search box" />
 </p>
 
 ### android application ( mobile[android,ios] )
