@@ -9,7 +9,8 @@ The x weather program is a weather program for practicing clean code and after w
 The weather program was written with the help of the api provided by (openweathermap.org)[openweathermap.org. <br>
 There are four cities: Tehran, Dubai, London, New York by default, which you can delete by dragging or clicking the delete button, or you can add them by searching and selecting new provinces.
 
-
+### Note
+ A programmer must learn by reading the code, but I will soon put a pdf here so that by reading it faster, you can understand and learn more about the different parts of the project.
 ## Technologies used
 ### A weather project to practice writing cleanly
 * state management bloc.
