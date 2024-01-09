@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:x_weather/domain/repository/weather_repository.dart';
 import 'package:x_weather/locator.dart';
 import 'package:x_weather/presentation/bloc/home/home_event.dart';
@@ -6,13 +7,13 @@ import 'package:x_weather/presentation/bloc/home/home_state.dart';
 import 'package:x_weather/presentation/bloc/home/sort_state.dart';
 import 'package:x_weather/presentation/bloc/home/weather_list_state.dart';
 
-import '../../../domain/datasource/cities_local_datasource.dart';
-import '../../../domain/datasource/sort_local_datasource.dart';
+import '../../../domain/repository/cities_local_repository.dart';
+import '../../../domain/repository/sort_local_repository.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IWeatherRepository _weatherRepository = locator.get();
-  final ICitiesLocalDatasource _citiesDB = locator.get();
-  final ISortLocalDatasource _sortDB = locator.get();
+  final ICitiesLocalRepository _citiesDB = locator.get();
+  final ISortLocalRepository _sortDB = locator.get();
   List<String> cities = [];
 
   HomeBloc()
@@ -26,7 +27,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<HomeRequestInitEvent>(
       (event, emit) async {
-        cities.addAll(await _citiesDB.getAllCities());
+        var response = await _citiesDB.getAllCities();
+        response.fold((errorMessage) {
+          if (kDebugMode) {
+            print('error get cities in db , errorMessage : $errorMessage');
+          }
+        }, (listCitiesDB) {
+          cities.addAll(listCitiesDB);
+        });
+
         add(HomeSetInitSortEvent());
       },
     );
@@ -61,11 +70,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       /// اگر شهر جدید که از سرچ باکس انتخاب شده وجود داشت حذف بکن و لیست قبلی پاک کن لیست جدید اضافه کن
       /// نمیشد از متن استفاده کرد چون کسر و.. میزاشت رو متن و احتمال داشت دو شهر یه اسم باشن برای همین id برای مقایسه گذاشتم و لیست قبلی هم باید با دیتابیس اپدیت بشه که نیازی نباشه map hستفاده کنیم
-      if (await _citiesDB.containsCities(event.cityId)) {
-        cities.clear();
-        _citiesDB.deleteCity(event.cityId);
-        cities.addAll(_citiesDB.getAllCities() as List<String>);
-      }
+      var response = await _citiesDB.containsCities(event.cityId);
+
+      response.fold((errorMessage) {
+        if (kDebugMode) {
+          print('error get contains in db , errorMessage : $errorMessage');
+        }
+      }, (checkedInCity) {
+        if (checkedInCity) {
+          cities.clear();
+          _citiesDB.deleteCity(event.cityId);
+          cities.addAll(_citiesDB.getAllCities() as List<String>);
+        }
+      });
+
       add(HomeRequestGetCitiesEvent());
     });
 
@@ -78,14 +96,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
 
     on<HomeSetInitSortEvent>((event, emit) async {
-      bool sortTopToDown = await _sortDB.getSortStatus();
-      emit(
-        state.copyWith(
-          newSortState: SortResponseState((sortTopToDown)
-              ? SortWeatherList.sortTopToDown
-              : SortWeatherList.sortDownToTop),
-        ),
-      );
+      var response = await _sortDB.getSortStatus();
+      response.fold((errorMessage) {
+        if (kDebugMode) {
+          print('error get Sort Status in db , errorMessage : $errorMessage');
+        }
+      }, (sortTopToDown){
+        emit(
+          state.copyWith(
+            newSortState: SortResponseState((sortTopToDown)
+                ? SortWeatherList.sortTopToDown
+                : SortWeatherList.sortDownToTop),
+          ),
+        );
+      });
+
       add(HomeRequestGetCitiesEvent());
     });
   }

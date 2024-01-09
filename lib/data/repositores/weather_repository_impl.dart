@@ -8,10 +8,11 @@ import 'package:x_weather/locator.dart';
 import 'package:x_weather/utils/constants/constants.dart';
 
 import '../../domain/datasource/cities_local_datasource.dart';
+import '../../domain/repository/cities_local_repository.dart';
 
 class WeatherRepositoryImpl extends IWeatherRepository {
   final IWeatherDatasource _weatherDatasource = locator.get();
-  final ICitiesLocalDatasource _citiesLocalDatasource = locator.get();
+  final ICitiesLocalRepository _citiesLocal = locator.get();
 
   /// گرفتن اطلاعات اب و هوای یک استان از دیتاسورس
   @override
@@ -44,7 +45,7 @@ class WeatherRepositoryImpl extends IWeatherRepository {
           /// saved new city in hive db
           if (response.name != null &&
               response.id != null ) {
-            _citiesLocalDatasource.addCity(response.id!, response.name!);
+            await _citiesLocal.addCity(response.id!, response.name!);
           }
         } catch (ex) {
           /// احتمال زیاد وقتی پاسخی نمیاد از open weather یعنی اون استان پشتیبانی نمیکنه ولی خب ما از api دیگه ای برای گرفتن استان ها استفاده میکنیم پس باید اینطوری هندل کنیم این خطارو
