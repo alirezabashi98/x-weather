@@ -27,7 +27,7 @@ class CitiesLocalDatasourceImpl extends ICitiesLocalDatasource {
   @override
   Future<List<String>> getAllCities() async {
     try{
-      return _citiesDB.values.toList() as List<String>;
+      return _citiesDB.values.toList();
     }catch(ex){
       rethrow;
     }

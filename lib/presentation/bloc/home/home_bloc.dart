@@ -76,11 +76,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if (kDebugMode) {
           print('error get contains in db , errorMessage : $errorMessage');
         }
-      }, (checkedInCity) {
+      }, (checkedInCity) async {
         if (checkedInCity) {
           cities.clear();
           _citiesDB.deleteCity(event.cityId);
-          cities.addAll(_citiesDB.getAllCities() as List<String>);
+          var newCitiesList = await _citiesDB.getAllCities();
+          newCitiesList.fold((errorMessage) {
+            if (kDebugMode) {
+              print('error get list cities for get weather');
+            }
+          }, (listCities) {
+            cities.addAll(listCities);
+          });
         }
       });
 
@@ -101,7 +108,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         if (kDebugMode) {
           print('error get Sort Status in db , errorMessage : $errorMessage');
         }
-      }, (sortTopToDown){
+      }, (sortTopToDown) {
         emit(
           state.copyWith(
             newSortState: SortResponseState((sortTopToDown)
