@@ -21,7 +21,7 @@ There are four cities: Tehran, Dubai, London, New York by default, which you can
 
 
 ### Download Demo App
-[Demo App Android](https://github.com/alirezabashi98/x-weather/releases/download/v1.4.1/app-release.apk)
+[Demo App Android](https://github.com/alirezabashi98/x-weather/releases/download/v1.6.2/app-release.apk)
 
 ## screenshots
 <p float="left">
