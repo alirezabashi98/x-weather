@@ -51,7 +51,7 @@ There are four cities: Tehran, Dubai, London, New York by default, which you can
 * flutter_typeahead: ^5.0.1
 * intl: ^0.19.0
 
-<br><br><br>
+<br>
 
 ## dev dependencies
 * flutter_lints: ^2.0.0
@@ -60,7 +60,7 @@ There are four cities: Tehran, Dubai, London, New York by default, which you can
 * auto_route_generator: ^7.3.2
 * hive_generator: ^2.0.1
 
-<br><br><br>
+<br>
 
 ### Getting Started
 ```shel
