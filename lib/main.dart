@@ -26,7 +26,6 @@ Future<void> initializeHive() async {
       5128581: 'New York'
     });
     appDataBox.put('firstRun', false);
-    sortBox.put('sortTopToDown', true);
   }
 }
 

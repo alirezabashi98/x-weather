@@ -30,7 +30,7 @@ class HomeScreen extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider.value(
-      value: locator.get<HomeBloc>()..add(HomeSetInitSortEvent()),
+      value: locator.get<HomeBloc>()..add(HomeRequestInitEvent()),
       child: this,
     );
   }

@@ -19,6 +19,10 @@ There are four cities: Tehran, Dubai, London, New York by default, which you can
 * solid.
 * Multi-platform.
 
+
+### Download Demo App
+[Demo App Android](https://github.com/alirezabashi98/x-weather/releases/download/v1.4.1/app-release.apk)
+
 ## screenshots
 <p float="left">
   <img src="screenshot/folder_structure.png" alt="x weather folder structure" />
@@ -88,4 +92,3 @@ I love to gain new experiences and share them with others. I am very eager to le
 * [Instagram](https://instagram.com/alirezabashi98)
 * [UI & UX Design](https://www.figma.com/file/HQVnCJYPBfawlSKIpEEq1V/Weather-App-UI-Design-Community?type=design&fuid=912405271405170038)
 * [Air Water Icon](https://www.figma.com/files/recents-and-sharing/recently-viewed?fuid=912405271405170038)
-* [Demo App Android](https://github.com/alirezabashi98/x-weather/releases/download/v1.4.1/app-release.apk)

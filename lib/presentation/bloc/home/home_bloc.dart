@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:x_weather/domain/repository/weather_repository.dart';
 import 'package:x_weather/locator.dart';
 import 'package:x_weather/presentation/bloc/home/home_event.dart';
@@ -7,10 +6,13 @@ import 'package:x_weather/presentation/bloc/home/home_state.dart';
 import 'package:x_weather/presentation/bloc/home/sort_state.dart';
 import 'package:x_weather/presentation/bloc/home/weather_list_state.dart';
 
+import '../../../domain/datasource/cities_local_datasource.dart';
+import '../../../domain/datasource/sort_local_datasource.dart';
+
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IWeatherRepository _weatherRepository = locator.get();
-  final _citiesDB = Hive.box<String>('cities');
-  final _sortDB = Hive.box<bool>('sort');
+  final ICitiesLocalDatasource _citiesDB = locator.get();
+  final ISortLocalDatasource _sortDB = locator.get();
   List<String> cities = [];
 
   HomeBloc()
@@ -22,7 +24,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ) {
     /// add saved cities
 
-    cities.addAll(_citiesDB.values);
+    on<HomeRequestInitEvent>(
+      (event, emit) async {
+        cities.addAll(await _citiesDB.getAllCities());
+        add(HomeSetInitSortEvent());
+      },
+    );
 
     on<HomeRequestGetCitiesEvent>((event, emit) async {
       emit(state.copyWith(newWeatherListState: WeatherListInitState()));
@@ -31,7 +38,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       /// cities.reversed.toList()
       ///
       /// درخواست برای گرفتن اب و هوای همه استان های انتخاب شده
-      // bool sortTopToDown = _sortDB.get('sortTopToDown') ?? true;
       bool sortTopToDown = (state.sortState as SortResponseState).sortState ==
           SortWeatherList.sortTopToDown;
       var response = await _weatherRepository.getWeatherFromListCities(
@@ -55,10 +61,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       /// اگر شهر جدید که از سرچ باکس انتخاب شده وجود داشت حذف بکن و لیست قبلی پاک کن لیست جدید اضافه کن
       /// نمیشد از متن استفاده کرد چون کسر و.. میزاشت رو متن و احتمال داشت دو شهر یه اسم باشن برای همین id برای مقایسه گذاشتم و لیست قبلی هم باید با دیتابیس اپدیت بشه که نیازی نباشه map hستفاده کنیم
-      if (_citiesDB.keys.contains(event.cityId)) {
+      if (await _citiesDB.containsCities(event.cityId)) {
         cities.clear();
-        _citiesDB.delete(event.cityId);
-        cities.addAll(_citiesDB.values);
+        _citiesDB.deleteCity(event.cityId);
+        cities.addAll(_citiesDB.getAllCities() as List<String>);
       }
       add(HomeRequestGetCitiesEvent());
     });
@@ -67,12 +73,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(newSortState: SortResponseState(event.sort)));
       bool sortTopToDown = (state.sortState as SortResponseState).sortState ==
           SortWeatherList.sortTopToDown;
-      _sortDB.put('sortTopToDown', sortTopToDown);
+      _sortDB.editSortStatus(sortTopToDown);
       add(HomeRequestGetCitiesEvent());
     });
 
     on<HomeSetInitSortEvent>((event, emit) async {
-      bool sortTopToDown = _sortDB.get('sortTopToDown') ?? true;
+      bool sortTopToDown = await _sortDB.getSortStatus();
       emit(
         state.copyWith(
           newSortState: SortResponseState((sortTopToDown)

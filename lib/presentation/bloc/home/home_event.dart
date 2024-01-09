@@ -2,6 +2,8 @@ import 'package:x_weather/presentation/bloc/home/sort_state.dart';
 
 abstract class HomeEvent {}
 
+class HomeRequestInitEvent extends HomeEvent {}
+
 class HomeRequestGetCitiesEvent extends HomeEvent {}
 
 class HomeRequestAddCityAndGetCitiesEvent extends HomeEvent {
